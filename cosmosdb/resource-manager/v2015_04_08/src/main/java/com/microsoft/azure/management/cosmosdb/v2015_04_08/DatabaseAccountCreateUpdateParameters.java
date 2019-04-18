@@ -82,6 +82,12 @@ public class DatabaseAccountCreateUpdateParameters extends Resource {
     private List<VirtualNetworkRule> virtualNetworkRules;
 
     /**
+     * Enables the account to write in multiple locations.
+     */
+    @JsonProperty(value = "properties.enableMultipleWriteLocations")
+    private Boolean enableMultipleWriteLocations;
+
+    /**
      * Creates an instance of DatabaseAccountCreateUpdateParameters class.
      * @param locations an array that contains the georeplication locations enabled for the Cosmos DB account.
      */
@@ -266,6 +272,26 @@ public class DatabaseAccountCreateUpdateParameters extends Resource {
      */
     public DatabaseAccountCreateUpdateParameters withVirtualNetworkRules(List<VirtualNetworkRule> virtualNetworkRules) {
         this.virtualNetworkRules = virtualNetworkRules;
+        return this;
+    }
+
+    /**
+     * Get enables the account to write in multiple locations.
+     *
+     * @return the enableMultipleWriteLocations value
+     */
+    public Boolean enableMultipleWriteLocations() {
+        return this.enableMultipleWriteLocations;
+    }
+
+    /**
+     * Set enables the account to write in multiple locations.
+     *
+     * @param enableMultipleWriteLocations the enableMultipleWriteLocations value to set
+     * @return the DatabaseAccountCreateUpdateParameters object itself.
+     */
+    public DatabaseAccountCreateUpdateParameters withEnableMultipleWriteLocations(Boolean enableMultipleWriteLocations) {
+        this.enableMultipleWriteLocations = enableMultipleWriteLocations;
         return this;
     }
 

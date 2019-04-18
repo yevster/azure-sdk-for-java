@@ -9,7 +9,6 @@
 package com.microsoft.azure.cognitiveservices.vision.contentmoderator;
 
 import com.microsoft.azure.AzureClient;
-import com.microsoft.azure.cognitiveservices.vision.contentmoderator.models.AzureRegionBaseUrl;
 import com.microsoft.rest.RestClient;
 
 /**
@@ -37,29 +36,29 @@ public interface ContentModeratorClient {
     String userAgent();
 
     /**
-     * Gets Supported Azure regions for Content Moderator endpoints. Possible values include: 'westus.api.cognitive.microsoft.com', 'westus2.api.cognitive.microsoft.com', 'eastus.api.cognitive.microsoft.com', 'eastus2.api.cognitive.microsoft.com', 'westcentralus.api.cognitive.microsoft.com', 'southcentralus.api.cognitive.microsoft.com', 'westeurope.api.cognitive.microsoft.com', 'northeurope.api.cognitive.microsoft.com', 'southeastasia.api.cognitive.microsoft.com', 'eastasia.api.cognitive.microsoft.com', 'australiaeast.api.cognitive.microsoft.com', 'brazilsouth.api.cognitive.microsoft.com', 'contentmoderatortest.azure-api.net'.
+     * Gets Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com)..
      *
-     * @return the baseUrl value.
+     * @return the endpoint value.
      */
-    AzureRegionBaseUrl baseUrl();
+    String endpoint();
 
     /**
-     * Sets Supported Azure regions for Content Moderator endpoints. Possible values include: 'westus.api.cognitive.microsoft.com', 'westus2.api.cognitive.microsoft.com', 'eastus.api.cognitive.microsoft.com', 'eastus2.api.cognitive.microsoft.com', 'westcentralus.api.cognitive.microsoft.com', 'southcentralus.api.cognitive.microsoft.com', 'westeurope.api.cognitive.microsoft.com', 'northeurope.api.cognitive.microsoft.com', 'southeastasia.api.cognitive.microsoft.com', 'eastasia.api.cognitive.microsoft.com', 'australiaeast.api.cognitive.microsoft.com', 'brazilsouth.api.cognitive.microsoft.com', 'contentmoderatortest.azure-api.net'.
+     * Sets Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com)..
      *
-     * @param baseUrl the baseUrl value.
+     * @param endpoint the endpoint value.
      * @return the service client itself
      */
-    ContentModeratorClient withBaseUrl(AzureRegionBaseUrl baseUrl);
+    ContentModeratorClient withEndpoint(String endpoint);
 
     /**
-     * Gets Gets or sets the preferred language for the response..
+     * Gets The preferred language for the response..
      *
      * @return the acceptLanguage value.
      */
     String acceptLanguage();
 
     /**
-     * Sets Gets or sets the preferred language for the response..
+     * Sets The preferred language for the response..
      *
      * @param acceptLanguage the acceptLanguage value.
      * @return the service client itself
@@ -67,14 +66,14 @@ public interface ContentModeratorClient {
     ContentModeratorClient withAcceptLanguage(String acceptLanguage);
 
     /**
-     * Gets Gets or sets the retry timeout in seconds for Long Running Operations. Default value is 30..
+     * Gets The retry timeout in seconds for Long Running Operations. Default value is 30..
      *
      * @return the longRunningOperationRetryTimeout value.
      */
     int longRunningOperationRetryTimeout();
 
     /**
-     * Sets Gets or sets the retry timeout in seconds for Long Running Operations. Default value is 30..
+     * Sets The retry timeout in seconds for Long Running Operations. Default value is 30..
      *
      * @param longRunningOperationRetryTimeout the longRunningOperationRetryTimeout value.
      * @return the service client itself
@@ -82,14 +81,14 @@ public interface ContentModeratorClient {
     ContentModeratorClient withLongRunningOperationRetryTimeout(int longRunningOperationRetryTimeout);
 
     /**
-     * Gets When set to true a unique x-ms-client-request-id value is generated and included in each request. Default is true..
+     * Gets Whether a unique x-ms-client-request-id should be generated. When set to true a unique x-ms-client-request-id value is generated and included in each request. Default is true..
      *
      * @return the generateClientRequestId value.
      */
     boolean generateClientRequestId();
 
     /**
-     * Sets When set to true a unique x-ms-client-request-id value is generated and included in each request. Default is true..
+     * Sets Whether a unique x-ms-client-request-id should be generated. When set to true a unique x-ms-client-request-id value is generated and included in each request. Default is true..
      *
      * @param generateClientRequestId the generateClientRequestId value.
      * @return the service client itself

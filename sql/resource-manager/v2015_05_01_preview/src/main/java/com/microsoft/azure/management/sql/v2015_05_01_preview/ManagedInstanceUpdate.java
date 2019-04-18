@@ -94,6 +94,35 @@ public class ManagedInstanceUpdate {
     private String dnsZonePartner;
 
     /**
+     * Whether or not the public data endpoint is enabled.
+     */
+    @JsonProperty(value = "properties.publicDataEndpointEnabled")
+    private Boolean publicDataEndpointEnabled;
+
+    /**
+     * Connection type used for connecting to the instance. Possible values
+     * include: 'Proxy', 'Redirect', 'Default'.
+     */
+    @JsonProperty(value = "properties.proxyOverride")
+    private ManagedInstanceProxyOverride proxyOverride;
+
+    /**
+     * Id of the timezone. Allowed values are timezones supported by Windows.
+     * Windows keeps details on supported timezones, including the id, in
+     * registry under
+     * KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time
+     * Zones.
+     * You can get those registry values via SQL Server by querying SELECT name
+     * AS timezone_id FROM sys.time_zone_info.
+     * List of Ids can also be obtained by executing
+     * [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+     * An example of valid timezone id is "Pacific Standard Time" or "W. Europe
+     * Standard Time".
+     */
+    @JsonProperty(value = "properties.timezoneId")
+    private String timezoneId;
+
+    /**
      * Resource tags.
      */
     @JsonProperty(value = "tags")
@@ -303,6 +332,76 @@ public class ManagedInstanceUpdate {
      */
     public ManagedInstanceUpdate withDnsZonePartner(String dnsZonePartner) {
         this.dnsZonePartner = dnsZonePartner;
+        return this;
+    }
+
+    /**
+     * Get whether or not the public data endpoint is enabled.
+     *
+     * @return the publicDataEndpointEnabled value
+     */
+    public Boolean publicDataEndpointEnabled() {
+        return this.publicDataEndpointEnabled;
+    }
+
+    /**
+     * Set whether or not the public data endpoint is enabled.
+     *
+     * @param publicDataEndpointEnabled the publicDataEndpointEnabled value to set
+     * @return the ManagedInstanceUpdate object itself.
+     */
+    public ManagedInstanceUpdate withPublicDataEndpointEnabled(Boolean publicDataEndpointEnabled) {
+        this.publicDataEndpointEnabled = publicDataEndpointEnabled;
+        return this;
+    }
+
+    /**
+     * Get connection type used for connecting to the instance. Possible values include: 'Proxy', 'Redirect', 'Default'.
+     *
+     * @return the proxyOverride value
+     */
+    public ManagedInstanceProxyOverride proxyOverride() {
+        return this.proxyOverride;
+    }
+
+    /**
+     * Set connection type used for connecting to the instance. Possible values include: 'Proxy', 'Redirect', 'Default'.
+     *
+     * @param proxyOverride the proxyOverride value to set
+     * @return the ManagedInstanceUpdate object itself.
+     */
+    public ManagedInstanceUpdate withProxyOverride(ManagedInstanceProxyOverride proxyOverride) {
+        this.proxyOverride = proxyOverride;
+        return this;
+    }
+
+    /**
+     * Get id of the timezone. Allowed values are timezones supported by Windows.
+     Windows keeps details on supported timezones, including the id, in registry under
+     KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
+     You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
+     List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+     An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
+     *
+     * @return the timezoneId value
+     */
+    public String timezoneId() {
+        return this.timezoneId;
+    }
+
+    /**
+     * Set id of the timezone. Allowed values are timezones supported by Windows.
+     Windows keeps details on supported timezones, including the id, in registry under
+     KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
+     You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
+     List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+     An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
+     *
+     * @param timezoneId the timezoneId value to set
+     * @return the ManagedInstanceUpdate object itself.
+     */
+    public ManagedInstanceUpdate withTimezoneId(String timezoneId) {
+        this.timezoneId = timezoneId;
         return this;
     }
 

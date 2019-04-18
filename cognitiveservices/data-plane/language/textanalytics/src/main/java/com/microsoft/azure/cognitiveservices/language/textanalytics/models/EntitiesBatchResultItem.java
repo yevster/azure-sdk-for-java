@@ -16,9 +16,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class EntitiesBatchResultItem {
     /**
-     * Unique document identifier.
+     * Unique, non-empty document identifier.
      */
-    @JsonProperty(value = "id", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "id")
     private String id;
 
     /**
@@ -28,7 +28,14 @@ public class EntitiesBatchResultItem {
     private List<EntityRecord> entities;
 
     /**
-     * Get the id value.
+     * (Optional) if showStats=true was specified in the request this field
+     * will contain information about the document payload.
+     */
+    @JsonProperty(value = "statistics")
+    private DocumentStatistics statistics;
+
+    /**
+     * Get unique, non-empty document identifier.
      *
      * @return the id value
      */
@@ -37,12 +44,43 @@ public class EntitiesBatchResultItem {
     }
 
     /**
-     * Get the entities value.
+     * Set unique, non-empty document identifier.
+     *
+     * @param id the id value to set
+     * @return the EntitiesBatchResultItem object itself.
+     */
+    public EntitiesBatchResultItem withId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
+     * Get recognized entities in the document.
      *
      * @return the entities value
      */
     public List<EntityRecord> entities() {
         return this.entities;
+    }
+
+    /**
+     * Get (Optional) if showStats=true was specified in the request this field will contain information about the document payload.
+     *
+     * @return the statistics value
+     */
+    public DocumentStatistics statistics() {
+        return this.statistics;
+    }
+
+    /**
+     * Set (Optional) if showStats=true was specified in the request this field will contain information about the document payload.
+     *
+     * @param statistics the statistics value to set
+     * @return the EntitiesBatchResultItem object itself.
+     */
+    public EntitiesBatchResultItem withStatistics(DocumentStatistics statistics) {
+        this.statistics = statistics;
+        return this;
     }
 
 }

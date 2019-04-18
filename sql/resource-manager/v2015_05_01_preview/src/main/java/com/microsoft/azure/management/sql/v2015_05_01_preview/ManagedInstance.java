@@ -65,6 +65,16 @@ public interface ManagedInstance extends HasInner<ManagedInstanceInner>, Resourc
     String licenseType();
 
     /**
+     * @return the proxyOverride value.
+     */
+    ManagedInstanceProxyOverride proxyOverride();
+
+    /**
+     * @return the publicDataEndpointEnabled value.
+     */
+    Boolean publicDataEndpointEnabled();
+
+    /**
      * @return the sku value.
      */
     Sku sku();
@@ -83,6 +93,11 @@ public interface ManagedInstance extends HasInner<ManagedInstanceInner>, Resourc
      * @return the subnetId value.
      */
     String subnetId();
+
+    /**
+     * @return the timezoneId value.
+     */
+    String timezoneId();
 
     /**
      * @return the vCores value.
@@ -184,6 +199,30 @@ public interface ManagedInstance extends HasInner<ManagedInstanceInner>, Resourc
         }
 
         /**
+         * The stage of the managedinstance definition allowing to specify ProxyOverride.
+         */
+        interface WithProxyOverride {
+            /**
+             * Specifies proxyOverride.
+             * @param proxyOverride Connection type used for connecting to the instance. Possible values include: 'Proxy', 'Redirect', 'Default'
+             * @return the next definition stage
+             */
+            WithCreate withProxyOverride(ManagedInstanceProxyOverride proxyOverride);
+        }
+
+        /**
+         * The stage of the managedinstance definition allowing to specify PublicDataEndpointEnabled.
+         */
+        interface WithPublicDataEndpointEnabled {
+            /**
+             * Specifies publicDataEndpointEnabled.
+             * @param publicDataEndpointEnabled Whether or not the public data endpoint is enabled
+             * @return the next definition stage
+             */
+            WithCreate withPublicDataEndpointEnabled(Boolean publicDataEndpointEnabled);
+        }
+
+        /**
          * The stage of the managedinstance definition allowing to specify Sku.
          */
         interface WithSku {
@@ -220,6 +259,23 @@ public interface ManagedInstance extends HasInner<ManagedInstanceInner>, Resourc
         }
 
         /**
+         * The stage of the managedinstance definition allowing to specify TimezoneId.
+         */
+        interface WithTimezoneId {
+            /**
+             * Specifies timezoneId.
+             * @param timezoneId Id of the timezone. Allowed values are timezones supported by Windows.
+ Windows keeps details on supported timezones, including the id, in registry under
+ KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
+ You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
+ List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+ An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time"
+             * @return the next definition stage
+             */
+            WithCreate withTimezoneId(String timezoneId);
+        }
+
+        /**
          * The stage of the managedinstance definition allowing to specify VCores.
          */
         interface WithVCores {
@@ -236,13 +292,13 @@ public interface ManagedInstance extends HasInner<ManagedInstanceInner>, Resourc
          * the resource to be created (via {@link WithCreate#create()}), but also allows
          * for any other optional settings to be specified.
          */
-        interface WithCreate extends Creatable<ManagedInstance>, Resource.DefinitionWithTags<WithCreate>, DefinitionStages.WithAdministratorLogin, DefinitionStages.WithAdministratorLoginPassword, DefinitionStages.WithCollation, DefinitionStages.WithDnsZonePartner, DefinitionStages.WithIdentity, DefinitionStages.WithLicenseType, DefinitionStages.WithSku, DefinitionStages.WithStorageSizeInGB, DefinitionStages.WithSubnetId, DefinitionStages.WithVCores {
+        interface WithCreate extends Creatable<ManagedInstance>, Resource.DefinitionWithTags<WithCreate>, DefinitionStages.WithAdministratorLogin, DefinitionStages.WithAdministratorLoginPassword, DefinitionStages.WithCollation, DefinitionStages.WithDnsZonePartner, DefinitionStages.WithIdentity, DefinitionStages.WithLicenseType, DefinitionStages.WithProxyOverride, DefinitionStages.WithPublicDataEndpointEnabled, DefinitionStages.WithSku, DefinitionStages.WithStorageSizeInGB, DefinitionStages.WithSubnetId, DefinitionStages.WithTimezoneId, DefinitionStages.WithVCores {
         }
     }
     /**
      * The template for a ManagedInstance update operation, containing all the settings that can be modified.
      */
-    interface Update extends Appliable<ManagedInstance>, Resource.UpdateWithTags<Update>, UpdateStages.WithAdministratorLogin, UpdateStages.WithAdministratorLoginPassword, UpdateStages.WithCollation, UpdateStages.WithDnsZonePartner, UpdateStages.WithLicenseType, UpdateStages.WithSku, UpdateStages.WithStorageSizeInGB, UpdateStages.WithSubnetId, UpdateStages.WithVCores {
+    interface Update extends Appliable<ManagedInstance>, Resource.UpdateWithTags<Update>, UpdateStages.WithAdministratorLogin, UpdateStages.WithAdministratorLoginPassword, UpdateStages.WithCollation, UpdateStages.WithDnsZonePartner, UpdateStages.WithLicenseType, UpdateStages.WithProxyOverride, UpdateStages.WithPublicDataEndpointEnabled, UpdateStages.WithSku, UpdateStages.WithStorageSizeInGB, UpdateStages.WithSubnetId, UpdateStages.WithTimezoneId, UpdateStages.WithVCores {
     }
 
     /**
@@ -310,6 +366,30 @@ public interface ManagedInstance extends HasInner<ManagedInstanceInner>, Resourc
         }
 
         /**
+         * The stage of the managedinstance update allowing to specify ProxyOverride.
+         */
+        interface WithProxyOverride {
+            /**
+             * Specifies proxyOverride.
+             * @param proxyOverride Connection type used for connecting to the instance. Possible values include: 'Proxy', 'Redirect', 'Default'
+             * @return the next update stage
+             */
+            Update withProxyOverride(ManagedInstanceProxyOverride proxyOverride);
+        }
+
+        /**
+         * The stage of the managedinstance update allowing to specify PublicDataEndpointEnabled.
+         */
+        interface WithPublicDataEndpointEnabled {
+            /**
+             * Specifies publicDataEndpointEnabled.
+             * @param publicDataEndpointEnabled Whether or not the public data endpoint is enabled
+             * @return the next update stage
+             */
+            Update withPublicDataEndpointEnabled(Boolean publicDataEndpointEnabled);
+        }
+
+        /**
          * The stage of the managedinstance update allowing to specify Sku.
          */
         interface WithSku {
@@ -343,6 +423,23 @@ public interface ManagedInstance extends HasInner<ManagedInstanceInner>, Resourc
              * @return the next update stage
              */
             Update withSubnetId(String subnetId);
+        }
+
+        /**
+         * The stage of the managedinstance update allowing to specify TimezoneId.
+         */
+        interface WithTimezoneId {
+            /**
+             * Specifies timezoneId.
+             * @param timezoneId Id of the timezone. Allowed values are timezones supported by Windows.
+ Windows keeps details on supported timezones, including the id, in registry under
+ KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
+ You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
+ List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+ An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time"
+             * @return the next update stage
+             */
+            Update withTimezoneId(String timezoneId);
         }
 
         /**

@@ -16,19 +16,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class KeyPhraseBatchResult {
     /**
-     * The documents property.
+     * Response by document.
      */
     @JsonProperty(value = "documents", access = JsonProperty.Access.WRITE_ONLY)
     private List<KeyPhraseBatchResultItem> documents;
 
     /**
-     * The errors property.
+     * Errors and Warnings by document.
      */
     @JsonProperty(value = "errors", access = JsonProperty.Access.WRITE_ONLY)
     private List<ErrorRecord> errors;
 
     /**
-     * Get the documents value.
+     * =(Optional) if showStats=true was specified in the request this field
+     * will contain information about the request payload.
+     */
+    @JsonProperty(value = "statistics", access = JsonProperty.Access.WRITE_ONLY)
+    private RequestStatistics statistics;
+
+    /**
+     * Get response by document.
      *
      * @return the documents value
      */
@@ -37,12 +44,21 @@ public class KeyPhraseBatchResult {
     }
 
     /**
-     * Get the errors value.
+     * Get errors and Warnings by document.
      *
      * @return the errors value
      */
     public List<ErrorRecord> errors() {
         return this.errors;
+    }
+
+    /**
+     * Get =(Optional) if showStats=true was specified in the request this field will contain information about the request payload.
+     *
+     * @return the statistics value
+     */
+    public RequestStatistics statistics() {
+        return this.statistics;
     }
 
 }

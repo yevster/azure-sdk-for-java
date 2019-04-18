@@ -15,6 +15,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class MatchRecord {
     /**
+     * (optional) If a well-known item with Wikipedia link is recognized, a
+     * decimal number denoting the confidence level of the Wikipedia info will
+     * be returned.
+     */
+    @JsonProperty(value = "wikipediaScore")
+    private Double wikipediaScore;
+
+    /**
+     * (optional) If an entity type is recognized, a decimal number denoting
+     * the confidence level of the entity type will be returned.
+     */
+    @JsonProperty(value = "entityTypeScore")
+    private Double entityTypeScore;
+
+    /**
      * Entity text as appears in the request.
      */
     @JsonProperty(value = "text")
@@ -33,7 +48,47 @@ public class MatchRecord {
     private Integer length;
 
     /**
-     * Get the text value.
+     * Get (optional) If a well-known item with Wikipedia link is recognized, a decimal number denoting the confidence level of the Wikipedia info will be returned.
+     *
+     * @return the wikipediaScore value
+     */
+    public Double wikipediaScore() {
+        return this.wikipediaScore;
+    }
+
+    /**
+     * Set (optional) If a well-known item with Wikipedia link is recognized, a decimal number denoting the confidence level of the Wikipedia info will be returned.
+     *
+     * @param wikipediaScore the wikipediaScore value to set
+     * @return the MatchRecord object itself.
+     */
+    public MatchRecord withWikipediaScore(Double wikipediaScore) {
+        this.wikipediaScore = wikipediaScore;
+        return this;
+    }
+
+    /**
+     * Get (optional) If an entity type is recognized, a decimal number denoting the confidence level of the entity type will be returned.
+     *
+     * @return the entityTypeScore value
+     */
+    public Double entityTypeScore() {
+        return this.entityTypeScore;
+    }
+
+    /**
+     * Set (optional) If an entity type is recognized, a decimal number denoting the confidence level of the entity type will be returned.
+     *
+     * @param entityTypeScore the entityTypeScore value to set
+     * @return the MatchRecord object itself.
+     */
+    public MatchRecord withEntityTypeScore(Double entityTypeScore) {
+        this.entityTypeScore = entityTypeScore;
+        return this;
+    }
+
+    /**
+     * Get entity text as appears in the request.
      *
      * @return the text value
      */
@@ -42,7 +97,7 @@ public class MatchRecord {
     }
 
     /**
-     * Set the text value.
+     * Set entity text as appears in the request.
      *
      * @param text the text value to set
      * @return the MatchRecord object itself.
@@ -53,7 +108,7 @@ public class MatchRecord {
     }
 
     /**
-     * Get the offset value.
+     * Get start position (in Unicode characters) for the entity match text.
      *
      * @return the offset value
      */
@@ -62,7 +117,7 @@ public class MatchRecord {
     }
 
     /**
-     * Set the offset value.
+     * Set start position (in Unicode characters) for the entity match text.
      *
      * @param offset the offset value to set
      * @return the MatchRecord object itself.
@@ -73,7 +128,7 @@ public class MatchRecord {
     }
 
     /**
-     * Get the length value.
+     * Get length (in Unicode characters) for the entity match text.
      *
      * @return the length value
      */
@@ -82,7 +137,7 @@ public class MatchRecord {
     }
 
     /**
-     * Set the length value.
+     * Set length (in Unicode characters) for the entity match text.
      *
      * @param length the length value to set
      * @return the MatchRecord object itself.

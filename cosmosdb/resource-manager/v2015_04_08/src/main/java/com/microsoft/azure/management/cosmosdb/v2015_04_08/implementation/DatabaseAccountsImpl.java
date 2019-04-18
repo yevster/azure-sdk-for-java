@@ -229,10 +229,10 @@ class DatabaseAccountsImpl extends GroupableResourcesCoreImpl<DatabaseAccount, D
     }
 
     @Override
-    public Completable checkNameExistsAsync(String accountName) {
+    public Observable<Boolean> checkNameExistsAsync(String accountName) {
         DatabaseAccountsInner client = this.inner();
-        return client.checkNameExistsAsync(accountName).toCompletable();
-    }
+        return client.checkNameExistsAsync(accountName)
+    ;}
 
     @Override
     public Observable<DatabaseAccountMetric> listMetricsAsync(String resourceGroupName, String accountName, String filter) {

@@ -86,7 +86,7 @@ public class SpellingFlaggedToken {
     }
 
     /**
-     * Get the type value.
+     * Get possible values include: 'UnknownToken', 'RepeatedToken'.
      *
      * @return the type value
      */
@@ -95,7 +95,7 @@ public class SpellingFlaggedToken {
     }
 
     /**
-     * Set the type value.
+     * Set possible values include: 'UnknownToken', 'RepeatedToken'.
      *
      * @param type the type value to set
      * @return the SpellingFlaggedToken object itself.

@@ -118,7 +118,7 @@ public interface DatabaseAccounts extends SupportsCreating<DatabaseAccount.Defin
      * @throws IllegalArgumentException thrown if parameters fail the validation
      * @return the observable for the request
      */
-    Completable checkNameExistsAsync(String accountName);
+    Observable<Boolean> checkNameExistsAsync(String accountName);
 
     /**
      * Retrieves the metrics determined by the given filter for the given database account.
@@ -142,7 +142,7 @@ public interface DatabaseAccounts extends SupportsCreating<DatabaseAccount.Defin
     Observable<DatabaseAccountUsage> listUsagesAsync(String resourceGroupName, String accountName);
 
     /**
-     * Retrieves metric defintions for the given database account.
+     * Retrieves metric definitions for the given database account.
      *
      * @param resourceGroupName Name of an Azure resource group.
      * @param accountName Cosmos DB database account name.

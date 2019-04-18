@@ -69,7 +69,7 @@ public class QueryContext {
     private Boolean isTransactional;
 
     /**
-     * Get the originalQuery value.
+     * Get the query string as specified in the request.
      *
      * @return the originalQuery value
      */
@@ -78,7 +78,7 @@ public class QueryContext {
     }
 
     /**
-     * Set the originalQuery value.
+     * Set the query string as specified in the request.
      *
      * @param originalQuery the originalQuery value to set
      * @return the QueryContext object itself.
@@ -89,7 +89,7 @@ public class QueryContext {
     }
 
     /**
-     * Get the alteredQuery value.
+     * Get the query string used by Bing to perform the query. Bing uses the altered query string if the original query string contained spelling mistakes. For example, if the query string is "saling downwind", the altered query string will be "sailing downwind". This field is included only if the original query string contains a spelling mistake.
      *
      * @return the alteredQuery value
      */
@@ -98,7 +98,7 @@ public class QueryContext {
     }
 
     /**
-     * Get the alterationOverrideQuery value.
+     * Get the query string to use to force Bing to use the original string. For example, if the query string is "saling downwind", the override query string will be "+saling downwind". Remember to encode the query string which results in "%2Bsaling+downwind". This field is included only if the original query string contains a spelling mistake.
      *
      * @return the alterationOverrideQuery value
      */
@@ -107,7 +107,7 @@ public class QueryContext {
     }
 
     /**
-     * Get the adultIntent value.
+     * Get a Boolean value that indicates whether the specified query has adult intent. The value is true if the query has adult intent; otherwise, false.
      *
      * @return the adultIntent value
      */
@@ -116,7 +116,7 @@ public class QueryContext {
     }
 
     /**
-     * Get the askUserForLocation value.
+     * Get a Boolean value that indicates whether Bing requires the user's location to provide accurate results. If you specified the user's location by using the X-MSEdge-ClientIP and X-Search-Location headers, you can ignore this field. For location aware queries, such as "today's weather" or "restaurants near me" that need the user's location to provide accurate results, this field is set to true. For location aware queries that include the location (for example, "Seattle weather"), this field is set to false. This field is also set to false for queries that are not location aware, such as "best sellers".
      *
      * @return the askUserForLocation value
      */

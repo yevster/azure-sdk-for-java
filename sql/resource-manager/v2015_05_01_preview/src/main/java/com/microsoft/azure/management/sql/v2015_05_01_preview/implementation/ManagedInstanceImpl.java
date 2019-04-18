@@ -14,6 +14,7 @@ import rx.Observable;
 import com.microsoft.azure.management.sql.v2015_05_01_preview.ManagedInstanceUpdate;
 import com.microsoft.azure.management.sql.v2015_05_01_preview.ResourceIdentity;
 import com.microsoft.azure.management.sql.v2015_05_01_preview.Sku;
+import com.microsoft.azure.management.sql.v2015_05_01_preview.ManagedInstanceProxyOverride;
 import rx.functions.Func1;
 
 class ManagedInstanceImpl extends GroupableResourceCoreImpl<ManagedInstance, ManagedInstanceInner, ManagedInstanceImpl, SqlManager> implements ManagedInstance, ManagedInstance.Definition, ManagedInstance.Update {
@@ -107,6 +108,16 @@ class ManagedInstanceImpl extends GroupableResourceCoreImpl<ManagedInstance, Man
     }
 
     @Override
+    public ManagedInstanceProxyOverride proxyOverride() {
+        return this.inner().proxyOverride();
+    }
+
+    @Override
+    public Boolean publicDataEndpointEnabled() {
+        return this.inner().publicDataEndpointEnabled();
+    }
+
+    @Override
     public Sku sku() {
         return this.inner().sku();
     }
@@ -124,6 +135,11 @@ class ManagedInstanceImpl extends GroupableResourceCoreImpl<ManagedInstance, Man
     @Override
     public String subnetId() {
         return this.inner().subnetId();
+    }
+
+    @Override
+    public String timezoneId() {
+        return this.inner().timezoneId();
     }
 
     @Override
@@ -188,6 +204,26 @@ class ManagedInstanceImpl extends GroupableResourceCoreImpl<ManagedInstance, Man
     }
 
     @Override
+    public ManagedInstanceImpl withProxyOverride(ManagedInstanceProxyOverride proxyOverride) {
+        if (isInCreateMode()) {
+            this.inner().withProxyOverride(proxyOverride);
+        } else {
+            this.updateParameter.withProxyOverride(proxyOverride);
+        }
+        return this;
+    }
+
+    @Override
+    public ManagedInstanceImpl withPublicDataEndpointEnabled(Boolean publicDataEndpointEnabled) {
+        if (isInCreateMode()) {
+            this.inner().withPublicDataEndpointEnabled(publicDataEndpointEnabled);
+        } else {
+            this.updateParameter.withPublicDataEndpointEnabled(publicDataEndpointEnabled);
+        }
+        return this;
+    }
+
+    @Override
     public ManagedInstanceImpl withSku(Sku sku) {
         if (isInCreateMode()) {
             this.inner().withSku(sku);
@@ -213,6 +249,16 @@ class ManagedInstanceImpl extends GroupableResourceCoreImpl<ManagedInstance, Man
             this.inner().withSubnetId(subnetId);
         } else {
             this.updateParameter.withSubnetId(subnetId);
+        }
+        return this;
+    }
+
+    @Override
+    public ManagedInstanceImpl withTimezoneId(String timezoneId) {
+        if (isInCreateMode()) {
+            this.inner().withTimezoneId(timezoneId);
+        } else {
+            this.updateParameter.withTimezoneId(timezoneId);
         }
         return this;
     }

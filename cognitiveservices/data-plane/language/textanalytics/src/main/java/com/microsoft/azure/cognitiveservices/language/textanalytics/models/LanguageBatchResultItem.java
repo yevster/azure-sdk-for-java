@@ -16,19 +16,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class LanguageBatchResultItem {
     /**
-     * Unique document identifier.
+     * Unique, non-empty document identifier.
      */
-    @JsonProperty(value = "id", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "id")
     private String id;
 
     /**
      * A list of extracted languages.
      */
-    @JsonProperty(value = "detectedLanguages", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "detectedLanguages")
     private List<DetectedLanguage> detectedLanguages;
 
     /**
-     * Get the id value.
+     * (Optional) if showStats=true was specified in the request this field
+     * will contain information about the document payload.
+     */
+    @JsonProperty(value = "statistics")
+    private DocumentStatistics statistics;
+
+    /**
+     * Get unique, non-empty document identifier.
      *
      * @return the id value
      */
@@ -37,12 +44,54 @@ public class LanguageBatchResultItem {
     }
 
     /**
-     * Get the detectedLanguages value.
+     * Set unique, non-empty document identifier.
+     *
+     * @param id the id value to set
+     * @return the LanguageBatchResultItem object itself.
+     */
+    public LanguageBatchResultItem withId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
+     * Get a list of extracted languages.
      *
      * @return the detectedLanguages value
      */
     public List<DetectedLanguage> detectedLanguages() {
         return this.detectedLanguages;
+    }
+
+    /**
+     * Set a list of extracted languages.
+     *
+     * @param detectedLanguages the detectedLanguages value to set
+     * @return the LanguageBatchResultItem object itself.
+     */
+    public LanguageBatchResultItem withDetectedLanguages(List<DetectedLanguage> detectedLanguages) {
+        this.detectedLanguages = detectedLanguages;
+        return this;
+    }
+
+    /**
+     * Get (Optional) if showStats=true was specified in the request this field will contain information about the document payload.
+     *
+     * @return the statistics value
+     */
+    public DocumentStatistics statistics() {
+        return this.statistics;
+    }
+
+    /**
+     * Set (Optional) if showStats=true was specified in the request this field will contain information about the document payload.
+     *
+     * @param statistics the statistics value to set
+     * @return the LanguageBatchResultItem object itself.
+     */
+    public LanguageBatchResultItem withStatistics(DocumentStatistics statistics) {
+        this.statistics = statistics;
+        return this;
     }
 
 }

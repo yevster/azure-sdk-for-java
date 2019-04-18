@@ -8,6 +8,7 @@
 
 package com.microsoft.azure.cognitiveservices.vision.contentmoderator.models;
 
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -36,10 +37,10 @@ public class ImageList {
      * Image List Metadata.
      */
     @JsonProperty(value = "Metadata")
-    private ImageListMetadata metadata;
+    private Map<String, String> metadata;
 
     /**
-     * Get the id value.
+     * Get image List Id.
      *
      * @return the id value
      */
@@ -48,7 +49,7 @@ public class ImageList {
     }
 
     /**
-     * Set the id value.
+     * Set image List Id.
      *
      * @param id the id value to set
      * @return the ImageList object itself.
@@ -59,7 +60,7 @@ public class ImageList {
     }
 
     /**
-     * Get the name value.
+     * Get image List Name.
      *
      * @return the name value
      */
@@ -68,7 +69,7 @@ public class ImageList {
     }
 
     /**
-     * Set the name value.
+     * Set image List Name.
      *
      * @param name the name value to set
      * @return the ImageList object itself.
@@ -79,7 +80,7 @@ public class ImageList {
     }
 
     /**
-     * Get the description value.
+     * Get description for image list.
      *
      * @return the description value
      */
@@ -88,7 +89,7 @@ public class ImageList {
     }
 
     /**
-     * Set the description value.
+     * Set description for image list.
      *
      * @param description the description value to set
      * @return the ImageList object itself.
@@ -99,21 +100,21 @@ public class ImageList {
     }
 
     /**
-     * Get the metadata value.
+     * Get image List Metadata.
      *
      * @return the metadata value
      */
-    public ImageListMetadata metadata() {
+    public Map<String, String> metadata() {
         return this.metadata;
     }
 
     /**
-     * Set the metadata value.
+     * Set image List Metadata.
      *
      * @param metadata the metadata value to set
      * @return the ImageList object itself.
      */
-    public ImageList withMetadata(ImageListMetadata metadata) {
+    public ImageList withMetadata(Map<String, String> metadata) {
         this.metadata = metadata;
         return this;
     }

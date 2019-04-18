@@ -16,6 +16,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class KeyPhraseBatchResultItem {
     /**
+     * Unique, non-empty document identifier.
+     */
+    @JsonProperty(value = "id")
+    private String id;
+
+    /**
      * A list of representative words or phrases. The number of key phrases
      * returned is proportional to the number of words in the input document.
      */
@@ -23,13 +29,34 @@ public class KeyPhraseBatchResultItem {
     private List<String> keyPhrases;
 
     /**
-     * Unique document identifier.
+     * (Optional) if showStats=true was specified in the request this field
+     * will contain information about the document payload.
      */
-    @JsonProperty(value = "id", access = JsonProperty.Access.WRITE_ONLY)
-    private String id;
+    @JsonProperty(value = "statistics")
+    private DocumentStatistics statistics;
 
     /**
-     * Get the keyPhrases value.
+     * Get unique, non-empty document identifier.
+     *
+     * @return the id value
+     */
+    public String id() {
+        return this.id;
+    }
+
+    /**
+     * Set unique, non-empty document identifier.
+     *
+     * @param id the id value to set
+     * @return the KeyPhraseBatchResultItem object itself.
+     */
+    public KeyPhraseBatchResultItem withId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
+     * Get a list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document.
      *
      * @return the keyPhrases value
      */
@@ -38,12 +65,23 @@ public class KeyPhraseBatchResultItem {
     }
 
     /**
-     * Get the id value.
+     * Get (Optional) if showStats=true was specified in the request this field will contain information about the document payload.
      *
-     * @return the id value
+     * @return the statistics value
      */
-    public String id() {
-        return this.id;
+    public DocumentStatistics statistics() {
+        return this.statistics;
+    }
+
+    /**
+     * Set (Optional) if showStats=true was specified in the request this field will contain information about the document payload.
+     *
+     * @param statistics the statistics value to set
+     * @return the KeyPhraseBatchResultItem object itself.
+     */
+    public KeyPhraseBatchResultItem withStatistics(DocumentStatistics statistics) {
+        this.statistics = statistics;
+        return this;
     }
 
 }

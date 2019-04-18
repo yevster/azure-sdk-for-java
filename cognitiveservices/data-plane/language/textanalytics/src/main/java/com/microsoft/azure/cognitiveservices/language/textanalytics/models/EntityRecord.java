@@ -24,7 +24,7 @@ public class EntityRecord {
     /**
      * List of instances this entity appears in the text.
      */
-    @JsonProperty(value = "matches", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "matches")
     private List<MatchRecord> matches;
 
     /**
@@ -40,7 +40,7 @@ public class EntityRecord {
     private String wikipediaId;
 
     /**
-     * URL for the entity's English Wikipedia page.
+     * URL for the entity's Wikipedia page.
      */
     @JsonProperty(value = "wikipediaUrl", access = JsonProperty.Access.WRITE_ONLY)
     private String wikipediaUrl;
@@ -53,7 +53,19 @@ public class EntityRecord {
     private String bingId;
 
     /**
-     * Get the name value.
+     * Entity type from Named Entity Recognition model.
+     */
+    @JsonProperty(value = "type")
+    private String type;
+
+    /**
+     * Entity sub type from Named Entity Recognition model.
+     */
+    @JsonProperty(value = "subType")
+    private String subType;
+
+    /**
+     * Get entity formal name.
      *
      * @return the name value
      */
@@ -62,7 +74,7 @@ public class EntityRecord {
     }
 
     /**
-     * Set the name value.
+     * Set entity formal name.
      *
      * @param name the name value to set
      * @return the EntityRecord object itself.
@@ -73,7 +85,7 @@ public class EntityRecord {
     }
 
     /**
-     * Get the matches value.
+     * Get list of instances this entity appears in the text.
      *
      * @return the matches value
      */
@@ -82,7 +94,18 @@ public class EntityRecord {
     }
 
     /**
-     * Get the wikipediaLanguage value.
+     * Set list of instances this entity appears in the text.
+     *
+     * @param matches the matches value to set
+     * @return the EntityRecord object itself.
+     */
+    public EntityRecord withMatches(List<MatchRecord> matches) {
+        this.matches = matches;
+        return this;
+    }
+
+    /**
+     * Get wikipedia language for which the WikipediaId and WikipediaUrl refers to.
      *
      * @return the wikipediaLanguage value
      */
@@ -91,7 +114,7 @@ public class EntityRecord {
     }
 
     /**
-     * Set the wikipediaLanguage value.
+     * Set wikipedia language for which the WikipediaId and WikipediaUrl refers to.
      *
      * @param wikipediaLanguage the wikipediaLanguage value to set
      * @return the EntityRecord object itself.
@@ -102,7 +125,7 @@ public class EntityRecord {
     }
 
     /**
-     * Get the wikipediaId value.
+     * Get wikipedia unique identifier of the recognized entity.
      *
      * @return the wikipediaId value
      */
@@ -111,7 +134,7 @@ public class EntityRecord {
     }
 
     /**
-     * Set the wikipediaId value.
+     * Set wikipedia unique identifier of the recognized entity.
      *
      * @param wikipediaId the wikipediaId value to set
      * @return the EntityRecord object itself.
@@ -122,7 +145,7 @@ public class EntityRecord {
     }
 
     /**
-     * Get the wikipediaUrl value.
+     * Get uRL for the entity's Wikipedia page.
      *
      * @return the wikipediaUrl value
      */
@@ -131,7 +154,7 @@ public class EntityRecord {
     }
 
     /**
-     * Get the bingId value.
+     * Get bing unique identifier of the recognized entity. Use in conjunction with the Bing Entity Search API to fetch additional relevant information.
      *
      * @return the bingId value
      */
@@ -140,13 +163,53 @@ public class EntityRecord {
     }
 
     /**
-     * Set the bingId value.
+     * Set bing unique identifier of the recognized entity. Use in conjunction with the Bing Entity Search API to fetch additional relevant information.
      *
      * @param bingId the bingId value to set
      * @return the EntityRecord object itself.
      */
     public EntityRecord withBingId(String bingId) {
         this.bingId = bingId;
+        return this;
+    }
+
+    /**
+     * Get entity type from Named Entity Recognition model.
+     *
+     * @return the type value
+     */
+    public String type() {
+        return this.type;
+    }
+
+    /**
+     * Set entity type from Named Entity Recognition model.
+     *
+     * @param type the type value to set
+     * @return the EntityRecord object itself.
+     */
+    public EntityRecord withType(String type) {
+        this.type = type;
+        return this;
+    }
+
+    /**
+     * Get entity sub type from Named Entity Recognition model.
+     *
+     * @return the subType value
+     */
+    public String subType() {
+        return this.subType;
+    }
+
+    /**
+     * Set entity sub type from Named Entity Recognition model.
+     *
+     * @param subType the subType value to set
+     * @return the EntityRecord object itself.
+     */
+    public EntityRecord withSubType(String subType) {
+        this.subType = subType;
         return this;
     }
 
