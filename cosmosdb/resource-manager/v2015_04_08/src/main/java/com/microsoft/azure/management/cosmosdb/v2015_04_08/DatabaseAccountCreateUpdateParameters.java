@@ -11,12 +11,14 @@ package com.microsoft.azure.management.cosmosdb.v2015_04_08;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.microsoft.rest.serializer.JsonFlatten;
+import com.microsoft.rest.SkipParentValidation;
 import com.microsoft.azure.Resource;
 
 /**
  * Parameters to create and update Cosmos DB database accounts.
  */
 @JsonFlatten
+@SkipParentValidation
 public class DatabaseAccountCreateUpdateParameters extends Resource {
     /**
      * Indicates the type of database account. This can only be set at database
@@ -40,7 +42,7 @@ public class DatabaseAccountCreateUpdateParameters extends Resource {
     private List<Location> locations;
 
     /**
-     * The databaseAccountOfferType property.
+     * The offer type for the database.
      */
     @JsonProperty(value = "properties.databaseAccountOfferType", required = true)
     private String databaseAccountOfferType;
@@ -156,7 +158,7 @@ public class DatabaseAccountCreateUpdateParameters extends Resource {
     }
 
     /**
-     * Get the databaseAccountOfferType value.
+     * Get the offer type for the database.
      *
      * @return the databaseAccountOfferType value
      */
@@ -165,7 +167,7 @@ public class DatabaseAccountCreateUpdateParameters extends Resource {
     }
 
     /**
-     * Set the databaseAccountOfferType value.
+     * Set the offer type for the database.
      *
      * @param databaseAccountOfferType the databaseAccountOfferType value to set
      * @return the DatabaseAccountCreateUpdateParameters object itself.

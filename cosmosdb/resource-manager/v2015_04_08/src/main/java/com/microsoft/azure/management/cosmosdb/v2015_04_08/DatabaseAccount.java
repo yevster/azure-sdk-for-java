@@ -123,7 +123,7 @@ public interface DatabaseAccount extends HasInner<DatabaseAccountInner>, Resourc
         interface WithDatabaseAccountOfferType {
            /**
             * Specifies databaseAccountOfferType.
-            * @param databaseAccountOfferType the databaseAccountOfferType parameter value
+            * @param databaseAccountOfferType The offer type for the database
             * @return the next definition stage
 */
             WithLocations withDatabaseAccountOfferType(String databaseAccountOfferType);
