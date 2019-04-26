@@ -24,7 +24,7 @@ public class ControllerInner extends Resource {
     /**
      * Provisioning state of the Azure Dev Spaces Controller. Possible values
      * include: 'Succeeded', 'Failed', 'Canceled', 'Updating', 'Creating',
-     * 'Deleting'.
+     * 'Deleting', 'Deleted'.
      */
     @JsonProperty(value = "properties.provisioningState", access = JsonProperty.Access.WRITE_ONLY)
     private ProvisioningState provisioningState;
@@ -61,7 +61,7 @@ public class ControllerInner extends Resource {
     private Sku sku;
 
     /**
-     * Get provisioning state of the Azure Dev Spaces Controller. Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Updating', 'Creating', 'Deleting'.
+     * Get provisioning state of the Azure Dev Spaces Controller. Possible values include: 'Succeeded', 'Failed', 'Canceled', 'Updating', 'Creating', 'Deleting', 'Deleted'.
      *
      * @return the provisioningState value
      */

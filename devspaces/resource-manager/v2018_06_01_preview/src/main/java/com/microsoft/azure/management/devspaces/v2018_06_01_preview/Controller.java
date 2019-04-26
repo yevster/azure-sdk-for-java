@@ -82,7 +82,9 @@ public interface Controller extends HasInner<ControllerInner>, Resource, Groupab
         interface WithHostSuffix {
            /**
             * Specifies hostSuffix.
-            */
+            * @param hostSuffix DNS suffix for public endpoints running in the Azure Dev Spaces Controller
+            * @return the next definition stage
+*/
             WithSku withHostSuffix(String hostSuffix);
         }
 
@@ -92,7 +94,9 @@ public interface Controller extends HasInner<ControllerInner>, Resource, Groupab
         interface WithSku {
            /**
             * Specifies sku.
-            */
+            * @param sku the sku parameter value
+            * @return the next definition stage
+*/
             WithTargetContainerHostCredentialsBase64 withSku(Sku sku);
         }
 
@@ -102,7 +106,9 @@ public interface Controller extends HasInner<ControllerInner>, Resource, Groupab
         interface WithTargetContainerHostCredentialsBase64 {
            /**
             * Specifies targetContainerHostCredentialsBase64.
-            */
+            * @param targetContainerHostCredentialsBase64 Credentials of the target container host (base64)
+            * @return the next definition stage
+*/
             WithTargetContainerHostResourceId withTargetContainerHostCredentialsBase64(String targetContainerHostCredentialsBase64);
         }
 
@@ -112,7 +118,9 @@ public interface Controller extends HasInner<ControllerInner>, Resource, Groupab
         interface WithTargetContainerHostResourceId {
            /**
             * Specifies targetContainerHostResourceId.
-            */
+            * @param targetContainerHostResourceId Resource ID of the target container host
+            * @return the next definition stage
+*/
             WithCreate withTargetContainerHostResourceId(String targetContainerHostResourceId);
         }
 

@@ -16,6 +16,7 @@ import com.microsoft.azure.management.apigeneration.Beta.SinceVersion;
 import com.microsoft.azure.arm.resources.AzureConfigurable;
 import com.microsoft.azure.serializer.AzureJacksonAdapter;
 import com.microsoft.rest.RestClient;
+import com.microsoft.azure.management.devspaces.v2018_06_01_preview.ContainerHostMappings;
 import com.microsoft.azure.management.devspaces.v2018_06_01_preview.Controllers;
 import com.microsoft.azure.management.devspaces.v2018_06_01_preview.Operations;
 import com.microsoft.azure.arm.resources.implementation.AzureConfigurableCoreImpl;
@@ -25,6 +26,7 @@ import com.microsoft.azure.arm.resources.implementation.ManagerCore;
  * Entry point to Azure DevSpaces resource management.
  */
 public final class DevSpacesManager extends ManagerCore<DevSpacesManager, DevSpacesManagementClientImpl> {
+    private ContainerHostMappings containerHostMappings;
     private Controllers controllers;
     private Operations operations;
     /**
@@ -72,6 +74,16 @@ public final class DevSpacesManager extends ManagerCore<DevSpacesManager, DevSpa
         * @return the interface exposing DevSpaces management API entry points that work across subscriptions
         */
         DevSpacesManager authenticate(AzureTokenCredentials credentials, String subscriptionId);
+    }
+
+    /**
+     * @return Entry point to manage ContainerHostMappings.
+     */
+    public ContainerHostMappings containerHostMappings() {
+        if (this.containerHostMappings == null) {
+            this.containerHostMappings = new ContainerHostMappingsImpl(this);
+        }
+        return this.containerHostMappings;
     }
 
     /**

@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 /**
- * The OrchestratorSpecificConnectionDetails model.
+ * Base class for types that supply values used to connect to container
+ * orchestrators.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "instanceType")
 @JsonTypeName("OrchestratorSpecificConnectionDetails")

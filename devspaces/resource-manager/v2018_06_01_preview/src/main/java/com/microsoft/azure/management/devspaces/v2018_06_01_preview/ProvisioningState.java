@@ -34,6 +34,9 @@ public final class ProvisioningState extends ExpandableStringEnum<ProvisioningSt
     /** Static value Deleting for ProvisioningState. */
     public static final ProvisioningState DELETING = fromString("Deleting");
 
+    /** Static value Deleted for ProvisioningState. */
+    public static final ProvisioningState DELETED = fromString("Deleted");
+
     /**
      * Creates or finds a ProvisioningState from its string representation.
      * @param name a name to look for
