@@ -243,7 +243,7 @@ public class EventData implements Comparable<EventData> {
      * <b>received</b> EventData.
      *
      * @return an encapsulation of all SystemProperties appended by EventHubs service into EventData. {@code null} if
-     *      the {@link EventData} is not received and is created by the public constructors.
+     *     the {@link EventData} is not received and is created by the public constructors.
      */
     public Map<String, Object> systemProperties() {
         return systemProperties;
@@ -398,7 +398,10 @@ public class EventData implements Comparable<EventData> {
             final Long sequenceNumber = this.getSystemProperty(SEQUENCE_NUMBER_ANNOTATION_NAME.getValue());
 
             if (sequenceNumber == null) {
-                throw new IllegalStateException(String.format(Locale.US, "sequenceNumber: %s should always be in map.", SEQUENCE_NUMBER_ANNOTATION_NAME.getValue()));
+                throw new IllegalStateException(String.format(
+                    Locale.US,
+                    "sequenceNumber: %s should always be in map.",
+                    SEQUENCE_NUMBER_ANNOTATION_NAME.getValue()));
             }
 
             return sequenceNumber;
