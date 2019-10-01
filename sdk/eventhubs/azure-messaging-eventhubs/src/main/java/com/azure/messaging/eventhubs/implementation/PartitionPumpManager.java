@@ -15,6 +15,7 @@ import com.azure.messaging.eventhubs.CloseReason;
 import com.azure.messaging.eventhubs.EventData;
 import com.azure.messaging.eventhubs.EventHubAsyncClient;
 import com.azure.messaging.eventhubs.EventHubAsyncConsumer;
+import com.azure.messaging.eventhubs.EventHubClientBuilder;
 import com.azure.messaging.eventhubs.EventHubConsumer;
 import com.azure.messaging.eventhubs.EventProcessor;
 import com.azure.messaging.eventhubs.PartitionManager;
@@ -50,7 +51,7 @@ public class PartitionPumpManager {
     private final PartitionManager partitionManager;
     private final Supplier<PartitionProcessor> partitionProcessorFactory;
     private final EventPosition initialEventPosition;
-    private final EventHubAsyncClient eventHubAsyncClient;
+    private final EventHubClientBuilder eventHubClientBuilder;
     private final TracerProvider tracerProvider;
 
     /**
@@ -61,15 +62,16 @@ public class PartitionPumpManager {
      * PartitionProcessor} when new partition pumps are started.
      * @param initialEventPosition The initial event position to use when a new partition pump is created and no
      * checkpoint for the partition is available.
-     * @param eventHubAsyncClient The client used to receive events from the Event Hub.
+     * @param eventHubClientBuilder The client used to receive events from the Event Hub.
      */
     public PartitionPumpManager(PartitionManager partitionManager,
         Supplier<PartitionProcessor> partitionProcessorFactory,
-        EventPosition initialEventPosition, EventHubAsyncClient eventHubAsyncClient, TracerProvider tracerProvider) {
+        EventPosition initialEventPosition, EventHubClientBuilder eventHubClientBuilder,
+        TracerProvider tracerProvider) {
         this.partitionManager = partitionManager;
         this.partitionProcessorFactory = partitionProcessorFactory;
         this.initialEventPosition = initialEventPosition;
-        this.eventHubAsyncClient = eventHubAsyncClient;
+        this.eventHubClientBuilder = eventHubClientBuilder;
         this.tracerProvider = tracerProvider;
     }
 
@@ -117,7 +119,7 @@ public class PartitionPumpManager {
         }
 
         EventHubConsumerOptions eventHubConsumerOptions = new EventHubConsumerOptions().setOwnerLevel(0L);
-        EventHubAsyncConsumer eventHubConsumer = eventHubAsyncClient
+        EventHubAsyncConsumer eventHubConsumer = eventHubClientBuilder.buildAsyncClient()
             .createConsumer(claimedOwnership.getConsumerGroupName(), claimedOwnership.getPartitionId(),
                 startFromEventPosition,
                 eventHubConsumerOptions);

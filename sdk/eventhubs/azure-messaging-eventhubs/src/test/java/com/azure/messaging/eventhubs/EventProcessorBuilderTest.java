@@ -61,7 +61,7 @@ public class EventProcessorBuilderTest {
 
         EventProcessor eventProcessor = new EventProcessorBuilder()
             .consumerGroup("consumer-group")
-            .eventHubClient(eventHubAsyncClient)
+            .connectionString("connection-string")
             .partitionProcessorFactory((() -> new PartitionProcessor() {
                     @Override
                     public Mono<Void> processEvent(PartitionContext partitionContext, EventData eventData) {

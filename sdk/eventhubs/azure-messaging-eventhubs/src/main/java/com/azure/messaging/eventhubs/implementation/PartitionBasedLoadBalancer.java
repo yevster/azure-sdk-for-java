@@ -7,6 +7,7 @@ import com.azure.core.implementation.util.ImplUtils;
 import com.azure.core.util.logging.ClientLogger;
 import com.azure.messaging.eventhubs.EventHubAsyncClient;
 import com.azure.messaging.eventhubs.EventHubAsyncConsumer;
+import com.azure.messaging.eventhubs.EventHubClientBuilder;
 import com.azure.messaging.eventhubs.EventProcessor;
 import com.azure.messaging.eventhubs.PartitionManager;
 import com.azure.messaging.eventhubs.models.PartitionOwnership;
@@ -55,8 +56,7 @@ public final class PartitionBasedLoadBalancer {
      * Creates an instance of PartitionBasedLoadBalancer for the given Event Hub name and consumer group.
      *
      * @param partitionManager The partition manager that this load balancer will use to read/update ownership details.
-     * @param eventHubAsyncClient The asynchronous Event Hub client used to consume events.
-     * @param eventHubName The Event Hub name the {@link EventProcessor} is associated with.
+     * @param eventHubClientBuilder The asynchronous Event Hub client used to consume events.
      * @param consumerGroupName The consumer group name the {@link EventProcessor} is associated with.
      * @param ownerId The identifier of the {@link EventProcessor} that owns this load balancer.
      * @param inactiveTimeLimitInSeconds The time in seconds to wait for an update on an ownership record before
@@ -65,12 +65,11 @@ public final class PartitionBasedLoadBalancer {
      * that this {@link EventProcessor} is processing.
      */
     public PartitionBasedLoadBalancer(final PartitionManager partitionManager,
-        final EventHubAsyncClient eventHubAsyncClient,
-        final String eventHubName, final String consumerGroupName, final String ownerId,
+        final EventHubClientBuilder eventHubClientBuilder, final String consumerGroupName, final String ownerId,
         final long inactiveTimeLimitInSeconds, final PartitionPumpManager partitionPumpManager) {
         this.partitionManager = partitionManager;
-        this.eventHubAsyncClient = eventHubAsyncClient;
-        this.eventHubName = eventHubName;
+        this.eventHubAsyncClient = eventHubClientBuilder.buildAsyncClient();
+        this.eventHubName = eventHubAsyncClient.getEventHubName();
         this.consumerGroupName = consumerGroupName;
         this.ownerId = ownerId;
         this.inactiveTimeLimitInSeconds = inactiveTimeLimitInSeconds;

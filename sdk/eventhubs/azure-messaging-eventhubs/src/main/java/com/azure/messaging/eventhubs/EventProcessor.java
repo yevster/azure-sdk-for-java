@@ -48,7 +48,7 @@ public class EventProcessor {
     /**
      * Package-private constructor. Use {@link EventHubClientBuilder} to create an instance.
      *
-     * @param eventHubAsyncClient The {@link EventHubAsyncClient}.
+     * @param eventHubClientBuilder The {@link EventHubClientBuilder}.
      * @param consumerGroup The consumer group name used in this event processor to consumer events.
      * @param partitionProcessorFactory The factory to create new partition processor(s).
      * @param initialEventPosition Initial event position to start consuming events.
@@ -56,11 +56,11 @@ public class EventProcessor {
      * information.
      * @param tracerProvider The tracer implementation.
      */
-    EventProcessor(EventHubAsyncClient eventHubAsyncClient, String consumerGroup,
+    EventProcessor(EventHubClientBuilder eventHubClientBuilder, String consumerGroup,
         Supplier<PartitionProcessor> partitionProcessorFactory, EventPosition initialEventPosition,
         PartitionManager partitionManager, TracerProvider tracerProvider) {
 
-        Objects.requireNonNull(eventHubAsyncClient, "eventHubAsyncClient cannot be null");
+        Objects.requireNonNull(eventHubClientBuilder, "eventHubAsyncClient cannot be null");
         Objects.requireNonNull(consumerGroup, "consumerGroup cannot be null");
         Objects.requireNonNull(partitionProcessorFactory, "partitionProcessorFactory cannot be null");
         Objects.requireNonNull(initialEventPosition, "initialEventPosition cannot be null");
@@ -69,10 +69,9 @@ public class EventProcessor {
         this.identifier = UUID.randomUUID().toString();
         logger.info("The instance ID for this event processors is {}", this.identifier);
         this.partitionPumpManager = new PartitionPumpManager(partitionManager, partitionProcessorFactory,
-            initialEventPosition, eventHubAsyncClient, tracerProvider);
+            initialEventPosition, eventHubClientBuilder, tracerProvider);
         this.partitionBasedLoadBalancer =
-            new PartitionBasedLoadBalancer(this.partitionManager, eventHubAsyncClient,
-                eventHubAsyncClient.getEventHubName(),
+            new PartitionBasedLoadBalancer(this.partitionManager, eventHubClientBuilder,
                 consumerGroup, identifier, TimeUnit.MINUTES.toSeconds(1), partitionPumpManager);
     }
 
