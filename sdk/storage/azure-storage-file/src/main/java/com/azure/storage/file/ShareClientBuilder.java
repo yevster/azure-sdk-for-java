@@ -70,7 +70,7 @@ public class ShareClientBuilder extends BaseFileClientBuilder<ShareClientBuilder
     }
 
     private AzureFileStorageImpl constructImpl() {
-        Objects.requireNonNull(shareName);
+        Objects.requireNonNull(shareName, "'shareName' cannot be null.");
 
         if (!super.hasCredential()) {
             throw logger.logExceptionAsError(
@@ -104,7 +104,7 @@ public class ShareClientBuilder extends BaseFileClientBuilder<ShareClientBuilder
      * has been set.
      */
     public ShareAsyncClient buildAsyncClient() {
-        return new ShareAsyncClient(constructImpl(), shareName, snapshot);
+        return new ShareAsyncClient(constructImpl(), shareName, snapshot, accountName);
     }
 
     /**
@@ -146,6 +146,8 @@ public class ShareClientBuilder extends BaseFileClientBuilder<ShareClientBuilder
             URL fullUrl = new URL(endpoint);
             super.endpoint = fullUrl.getProtocol() + "://" + fullUrl.getHost();
 
+            this.accountName = Utility.getAccountName(fullUrl);
+
             // Attempt to get the share name from the URL passed
             String[] pathSegments = fullUrl.getPath().split("/");
             int length = pathSegments.length;
@@ -177,7 +179,7 @@ public class ShareClientBuilder extends BaseFileClientBuilder<ShareClientBuilder
      * @throws NullPointerException If {@code shareName} is {@code null}.
      */
     public ShareClientBuilder shareName(String shareName) {
-        this.shareName = Objects.requireNonNull(shareName);
+        this.shareName = Objects.requireNonNull(shareName, "'shareName' cannot be null.");
         return this;
     }
 

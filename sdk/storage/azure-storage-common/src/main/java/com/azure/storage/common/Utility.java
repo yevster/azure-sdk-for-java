@@ -454,6 +454,31 @@ public final class Utility {
     }
 
     /**
+     * Strips the account name from host part of the URL object.
+     *
+     * @param url URL having its  hostanme
+     * @return account name.
+     */
+    public static String getAccountName(URL url) {
+        UrlBuilder builder = UrlBuilder.parse(url);
+        String accountName =  null;
+        String host = builder.getHost();
+        //Parse host to get account name
+        // host will look like this : <accountname>.blob.core.windows.net
+        if (!ImplUtils.isNullOrEmpty(host)) {
+            int accountNameIndex = host.indexOf('.');
+            if (accountNameIndex == -1) {
+                // host only contains account name
+                accountName = host;
+            } else {
+                // if host is separated by .
+                accountName = host.substring(0, accountNameIndex);
+            }
+        }
+        return accountName;
+    }
+
+    /**
      * Strips the last path segment from the passed URL.
      *
      * @param baseURL URL having its last path segment stripped
@@ -512,9 +537,19 @@ public final class Utility {
             .concatMap(pos -> Mono.fromCallable(() -> {
                 long count = pos + blockSize > length ? length - pos : blockSize;
                 byte[] cache = new byte[(int) count];
-                int lastIndex = data.read(cache);
-                currentTotalLength[0] += lastIndex;
-                if (lastIndex < count) {
+                int numOfBytes = 0;
+                int offset = 0;
+                // Revise the casting if the max allowed network data transmission is over 2G.
+                int len = (int) count;
+                while (numOfBytes != -1 && offset < count) {
+                    numOfBytes = data.read(cache, offset, len);
+                    offset += numOfBytes;
+                    len -= numOfBytes;
+                    if (numOfBytes != -1) {
+                        currentTotalLength[0] += numOfBytes;
+                    }
+                }
+                if (numOfBytes == -1 && currentTotalLength[0] < length) {
                     throw LOGGER.logExceptionAsError(new UnexpectedLengthException(
                         String.format("Request body emitted %d bytes, less than the expected %d bytes.",
                             currentTotalLength[0], length), currentTotalLength[0], length));
@@ -530,7 +565,7 @@ public final class Utility {
                                 totalLength, length), totalLength, length));
                     }
                 } catch (IOException e) {
-                    throw LOGGER.logExceptionAsError(new RuntimeException("I/O errors occurs. Error deatils: "
+                    throw LOGGER.logExceptionAsError(new RuntimeException("I/O errors occurs. Error details: "
                         + e.getMessage()));
                 }
             });

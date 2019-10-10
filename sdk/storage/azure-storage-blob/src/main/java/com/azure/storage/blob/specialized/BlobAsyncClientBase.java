@@ -16,6 +16,8 @@ import com.azure.core.util.logging.ClientLogger;
 import com.azure.storage.blob.BlobProperties;
 import com.azure.storage.blob.BlobUrlParts;
 import com.azure.storage.blob.HttpGetterInfo;
+import com.azure.storage.blob.ProgressReceiver;
+import com.azure.storage.blob.ProgressReporter;
 import com.azure.storage.blob.implementation.AzureBlobStorageBuilder;
 import com.azure.storage.blob.implementation.AzureBlobStorageImpl;
 import com.azure.storage.blob.models.AccessTier;
@@ -46,6 +48,10 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -67,6 +73,7 @@ public class BlobAsyncClientBase {
     protected final AzureBlobStorageImpl azureBlobStorage;
     private final String snapshot;
     private final CpkInfo customerProvidedKey;
+    protected final String accountName;
 
     /**
      * Package-private constructor for use by {@link SpecializedBlobClientBuilder}.
@@ -75,11 +82,14 @@ public class BlobAsyncClientBase {
      * @param snapshot Optional. The snapshot identifier for the snapshot blob.
      * @param customerProvidedKey Optional. Customer provided key used during encryption of the blob's data on the
      * server.
+     * @param accountName The account name for storage account.
      */
-    protected BlobAsyncClientBase(AzureBlobStorageImpl azureBlobStorage, String snapshot, CpkInfo customerProvidedKey) {
+    protected BlobAsyncClientBase(AzureBlobStorageImpl azureBlobStorage, String snapshot,
+                                  CpkInfo customerProvidedKey, String accountName) {
         this.azureBlobStorage = azureBlobStorage;
         this.snapshot = snapshot;
         this.customerProvidedKey = customerProvidedKey;
+        this.accountName = accountName;
     }
 
     /**
@@ -92,7 +102,7 @@ public class BlobAsyncClientBase {
         return new BlobAsyncClientBase(new AzureBlobStorageBuilder()
             .url(getBlobUrl())
             .pipeline(azureBlobStorage.getHttpPipeline())
-            .build(), snapshot, customerProvidedKey);
+            .build(), snapshot, customerProvidedKey, accountName);
     }
 
     /**
@@ -154,6 +164,15 @@ public class BlobAsyncClientBase {
      */
     public CpkInfo getCustomerProvidedKey() {
         return customerProvidedKey;
+    }
+
+    /**
+     * Get associated account name.
+     *
+     * @return account name associated with this storage resource.
+     */
+    public String getAccountName() {
+        return this.accountName;
     }
 
     /**
@@ -548,26 +567,36 @@ public class BlobAsyncClientBase {
         final ParallelTransferOptions finalParallelTransferOptions = parallelTransferOptions == null
             ? new ParallelTransferOptions()
             : parallelTransferOptions;
+        ProgressReceiver progressReceiver = finalParallelTransferOptions.getProgressReceiver();
+
+        // See ProgressReporter for an explanation on why this lock is necessary and why we use AtomicLong.
+        AtomicLong totalProgress = new AtomicLong(0);
+        Lock progressLock = new ReentrantLock();
 
         return Mono.using(() -> downloadToFileResourceSupplier(filePath),
-            channel -> getPropertiesWithResponse(accessConditions).flatMap(response -> processInRange(channel, response,
+            channel -> getPropertiesWithResponse(accessConditions)
+                .flatMap(response -> processInRange(channel, response,
                 range, finalParallelTransferOptions.getBlockSize(), options, accessConditions, rangeGetContentMD5,
-                context)), this::downloadToFileCleanup);
+                context, totalProgress, progressLock, progressReceiver)), this::downloadToFileCleanup);
 
     }
 
     private Mono<Response<BlobProperties>> processInRange(AsynchronousFileChannel channel,
                 Response<BlobProperties> blobPropertiesResponse, BlobRange range, Integer blockSize,
                 ReliableDownloadOptions options, BlobAccessConditions accessConditions, boolean rangeGetContentMD5,
-                Context context) {
+                Context context, AtomicLong totalProgress, Lock progressLock, ProgressReceiver progressReceiver) {
         return Mono.justOrEmpty(range).switchIfEmpty(Mono.just(new BlobRange(0,
             blobPropertiesResponse.getValue().getBlobSize()))).flatMapMany(rg ->
             Flux.fromIterable(sliceBlobRange(rg, blockSize)))
             .flatMap(chunk -> this.download(chunk, accessConditions, rangeGetContentMD5, context)
                 .subscribeOn(Schedulers.elastic())
-                .flatMap(dar -> FluxUtil.writeFile(dar.body(options), channel,
-                    chunk.getOffset() - ((range == null) ? 0 : range.getOffset()))
-                )).then(Mono.just(blobPropertiesResponse));
+                .flatMap(dar -> {
+                    Flux<ByteBuffer> progressData = ProgressReporter.addParallelProgressReporting(
+                        dar.body(options), progressReceiver, progressLock, totalProgress);
+
+                    return FluxUtil.writeFile(progressData, channel,
+                        chunk.getOffset() - ((range == null) ? 0 : range.getOffset()));
+                })).then(Mono.just(blobPropertiesResponse));
     }
 
     private AsynchronousFileChannel downloadToFileResourceSupplier(String filePath) {
